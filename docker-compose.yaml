@@ -1,0 +1,29 @@
+services:
+  mcp-openai-router:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-openai-router
+    restart: unless-stopped
+    env_file:
+      - .env
+    # Внутренний порт сервиса для контейнеров в сети mcp-net
+    expose:
+      - "8000"
+    # Доступ с хоста (локально): 127.0.0.1:8001 -> контейнер:8000
+    # Если не нужен доступ с хоста — удалите весь блок 'ports'.
+    ports:
+      - "127.0.0.1:8001:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://mcp-openai-router:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./:/app
+    networks:
+      - mcp-net
+
+networks:
+  mcp-net:
+    external: true
