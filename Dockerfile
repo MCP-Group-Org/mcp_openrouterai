@@ -6,10 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_NO_CACHE_DIR=off \
-    UVICORN_WORKERS=1 \
-    APP_MODULE=app.main:app \
-    ROUTER_PORT=8000 \
-    OPENAI_BASE_URL=https://api.openai.com/v1
+    UVICORN_WORKERS=1
 
 # Пакеты и юзер
 RUN apt-get update && apt-get install -y --no-install-recommends \
