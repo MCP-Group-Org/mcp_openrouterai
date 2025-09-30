@@ -1,7 +1,8 @@
 from __future__ import annotations
 from functools import lru_cache
 from typing import Literal, Optional
-from pydantic import BaseSettings, Field, HttpUrl, field_validator
+from pydantic import Field, HttpUrl, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     # --- OpenRouter ---
@@ -21,13 +22,13 @@ class Settings(BaseSettings):
     # Включать ли расширенный reasoning у моделей, которые его поддерживают
     include_reasoning: Optional[Literal[True, False]] = Field(None, alias="INCLUDE_REASONING")
 
-    model_config = {
-        "env_file": ".env",
-        "env_file_encoding": "utf-8",
-        "env_prefix": "",
-        "case_sensitive": True,
-        "extra": "ignore",
-    }
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_prefix="",
+        case_sensitive=True,
+        extra="ignore",
+    )
 
     @field_validator("openrouter_api_key")
     @classmethod
